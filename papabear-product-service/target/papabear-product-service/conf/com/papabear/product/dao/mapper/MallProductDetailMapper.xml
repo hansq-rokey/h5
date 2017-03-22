@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.MallProductDetailDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallProductDetail" >
+    <id column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+    <result column="app_product_detail" property="appProductDetail" jdbcType="LONGVARCHAR" />
+    <result column="app_paramter_detail" property="appParamterDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.papabear.product.entity.MallProductDetail" extends="BaseResultMap" >
+  	<id column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="app_product_detail" property="appProductDetail" jdbcType="LONGVARCHAR" />
+    <result column="app_paramter_detail" property="appParamterDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    product_id,create_date_time, update_time, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail
+  </sql>
+  <sql id="Blob_Column_List_APP" >
+    product_id,app_product_detail,app_paramter_detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Blob_Column_List_APP" />
+    from tbl_mall_product_detail
+    where product_id = #{productId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getMallProductDetail" resultMap="ResultMapWithBLOBs">
+    select 
+   <include refid="Blob_Column_List_APP" />
+    from tbl_mall_product_detail
+    where product_id = #{productId,jdbcType=BIGINT} and status = #{status,jdbcType=TINYINT}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_product_detail
+    where product_id = #{productId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallProductDetail" >
+    insert into tbl_mall_product_detail (product_id, create_date_time, 
+      update_time, status, detail,app_product_detail,app_paramter_detail
+      )
+    values (#{productId,jdbcType=BIGINT}, #{createDateTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{detail,jdbcType=LONGVARCHAR},
+      #{appProductDetail,jdbcType=LONGVARCHAR},#{appParamterDetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallProductDetail" >
+    insert into tbl_mall_product_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="appProductDetail != null" >
+        app_product_detail,
+      </if>
+      <if test="appParamterDetail != null" >
+        app_paramter_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="appProductDetail != null" >
+        #{appProductDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="appParamterDetail != null" >
+        #{appParamterDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallProductDetail" >
+    update tbl_mall_product_detail
+    <set >
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="appProductDetail != null" >
+        app_product_detail=#{appProductDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="appParamterDetail != null" >
+        app_paramter_detail=#{appParamterDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.papabear.product.entity.MallProductDetail" >
+    update tbl_mall_product_detail
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      detail = #{detail,jdbcType=LONGVARCHAR},
+      app_product_detail=#{appProductDetail,jdbcType=LONGVARCHAR},
+      app_paramter_detail=#{appParamterDetail,jdbcType=LONGVARCHAR}
+    where product_id = #{productId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallProductDetail" >
+    update tbl_mall_product_detail
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where product_id = #{productId,jdbcType=BIGINT}
+  </update>
+</mapper>

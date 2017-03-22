@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.BasicCategoryModelFormatDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallBasicCategoryModelFormat" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="walt" property="walt" jdbcType="INTEGER" />
+    <result column="is_smart" property="isSmart" jdbcType="TINYINT" />
+    <result column="category_model_format_number" property="categoryModelFormatNumber" jdbcType="CHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="category_model_id" property="categoryModelId" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="discount_price" property="discountPrice" jdbcType="REAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="real_stock" property="realStock" jdbcType="INTEGER" />
+    <result column="warn_count" property="warnCount" jdbcType="INTEGER" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="property_value_combine" property="propertyValueCombine" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="is_custom_made" property="isCustomMade" jdbcType="TINYINT" />
+    <result column="unit" property="unit" jdbcType="CHAR" />
+    <result column="explain" property="explain" jdbcType="VARCHAR" />
+    <result column="is_ext_properties" property="isExtProperties" jdbcType="TINYINT" />
+    <result column="format_total_profit" property="formatTotalProfit" jdbcType="REAL" />
+    <result column="product_purchase_price" property="productPurchasePrice" jdbcType="REAL" />
+    <result column="area_money" property="areaMoney" jdbcType="REAL" />
+    <result column="c_display" property="cDisplay" jdbcType="TINYINT" />
+    <result column="b_display" property="bDisplay" jdbcType="TINYINT" />
+    <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" /> 
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, walt, is_smart, category_model_format_number, category_id, category_model_id, 
+    price, discount_price, stock,real_stock,warn_count,create_date_time, update_time, creator_id, status,property_value_combine,
+    length, width,is_custom_made, unit, `explain`, is_ext_properties,format_total_profit,product_purchase_price,area_money,
+    c_display,b_display,freight_template_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model_format
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getBaxicCategoryModelFormatMaxCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    	code 
+    FROM 
+    	tbl_mall_basic_category_model_format  
+    WHERE 
+    	category_model_id=#{id,jdbcType=BIGINT} 
+    ORDER BY code DESC LIMIT 1;
+  </select>
+  <resultMap id="selectByIdsResultMap"
+		type="com.papabear.product.entity.MallBasicCategoryModelFormat">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="CHAR" />
+		<result column="walt" property="walt" jdbcType="INTEGER" />
+		<result column="is_smart" property="isSmart" jdbcType="TINYINT" />
+		<result column="category_model_format_number" property="categoryModelFormatNumber" jdbcType="CHAR" />
+		<result column="category_id" property="categoryId" jdbcType="BIGINT" />
+		<result column="price" property="price" jdbcType="REAL" />
+		<result column="discount_price" property="discountPrice" jdbcType="REAL" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+		<result column="real_stock" property="realStock" jdbcType="INTEGER" />
+		<result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="unit" property="unit" jdbcType="CHAR" />
+    	<result column="explain" property="explain" jdbcType="VARCHAR" />
+    	<result column="is_ext_properties" property="isExtProperties" jdbcType="TINYINT" />
+    	<result column="format_total_profit" property="formatTotalProfit" jdbcType="REAL" />
+    	<result column="product_purchase_price" property="productPurchasePrice" jdbcType="REAL" />
+    	<result column="area_money" property="areaMoney" jdbcType="REAL" />
+    	<result column="c_display" property="cDisplay" jdbcType="TINYINT" />
+    	<result column="b_display" property="bDisplay" jdbcType="TINYINT" />
+    	<result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" /> 
+		<collection property="pics" ofType="com.papabear.product.entity.MallProductPic" column="id" select="getProductPic"/>
+	</resultMap>
+  <select id="selectByIds" resultMap="selectByIdsResultMap">
+		select 
+		id, name, code, walt, is_smart,
+		category_model_format_number,
+		category_id,
+		price,
+		discount_price, stock, create_date_time, update_time, creator_id,
+		status,real_stock, unit, `explain`, is_ext_properties,format_total_profit,
+		product_purchase_price,area_money,c_display,b_display,freight_template_id 
+		from tbl_mall_basic_category_model_format where 1=1
+		<if test="list != null and list.size>0">
+			and id in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="list==null or list.size==0">
+			and 1=0
+		</if>
+	</select>
+	<select id="getProductPic" parameterType="long" resultType="com.papabear.product.entity.MallProductPic">
+         SELECT url FROM tbl_mall_product_pic WHERE product_model_format_id=#{id}
+  </select>
+  <!-- 查询列表 start  -->
+  <resultMap id="queryByCategoryModelResultMap" type="com.papabear.product.entity.MallBasicCategoryModelFormat" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="walt" property="walt" jdbcType="INTEGER" />
+    <result column="is_smart" property="isSmart" jdbcType="TINYINT" />
+    <result column="category_model_format_number" property="categoryModelFormatNumber" jdbcType="CHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="discount_price" property="discountPrice" jdbcType="REAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="is_custom_made" property="isCustomMade" jdbcType="TINYINT" />
+    <result column="unit" property="unit" jdbcType="CHAR" />
+    <result column="explain" property="explain" jdbcType="VARCHAR" />
+    <result column="is_ext_properties" property="isExtProperties" jdbcType="TINYINT" />
+    <result column="format_total_profit" property="formatTotalProfit" jdbcType="REAL" />
+    <result column="product_purchase_price" property="productPurchasePrice" jdbcType="REAL" />
+    <result column="area_money" property="areaMoney" jdbcType="REAL" />
+    <result column="c_display" property="cDisplay" jdbcType="TINYINT" />
+    <result column="b_display" property="bDisplay" jdbcType="TINYINT" />
+    <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" /> 
+    <association property="basicCategoryModel" column="category_model_id" select="com.papabear.product.dao.BasicCategoryModelDao.selectByPrimaryKey"/>
+    <collection property="pics" ofType="com.papabear.product.entity.MallProductPic" column="id" select="getProductPic"/>
+    <collection property="propertiesValues" ofType="com.papabear.product.entity.MallProductPropertiesValue" column="id" select="getPropertiesValues"/>
+  </resultMap>
+  <select id="queryByCategoryModel" resultMap="queryByCategoryModelResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model_format
+    <where>
+    	<if test="modelId!=null">
+    		category_model_id = #{modelId,jdbcType=BIGINT}
+    	</if>
+    	<if test="status!=null">
+    		and status = #{status,jdbcType=TINYINT}
+    	</if>
+    </where>
+  </select>    
+  <select id="getPropertiesValues" parameterType="long" resultType="com.papabear.product.entity.MallProductPropertiesValue">
+         SELECT 
+         	pv.`value` 
+         FROM 
+         	tbl_mall_product_properties_value pv
+         	LEFT JOIN tbl_mall_format_properties_value_relation pvr  ON pvr.product_properties_value_id=pv.id 
+         WHERE pvr.category_model_format_id=#{id} ORDER BY pvr.product_properties_id
+  </select>
+  <!-- end  -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_basic_category_model_format
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallBasicCategoryModelFormat" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_basic_category_model_format (id, name, code, walt, 
+      is_smart, category_model_format_number, category_id, 
+      category_model_id, price, discount_price, 
+      stock, real_stock, warn_count, 
+      create_date_time, update_time, creator_id, 
+      status, invalid, property_value_combine, 
+      length, width,is_custom_made, unit, `explain`,is_ext_properties,format_total_profit,product_purchase_price,area_money,c_display,b_display,freight_template_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=CHAR}, #{walt,jdbcType=INTEGER}, 
+      #{isSmart,jdbcType=TINYINT}, #{categoryModelFormatNumber,jdbcType=CHAR}, #{categoryId,jdbcType=BIGINT}, 
+      #{categoryModelId,jdbcType=BIGINT}, #{price,jdbcType=REAL}, #{discountPrice,jdbcType=REAL}, 
+      #{stock,jdbcType=INTEGER}, #{realStock,jdbcType=INTEGER}, #{warnCount,jdbcType=INTEGER}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, 
+      #{status,jdbcType=TINYINT}, #{invalid,jdbcType=TINYINT}, #{propertyValueCombine,jdbcType=VARCHAR}, 
+      #{length,jdbcType=INTEGER}, #{width,jdbcType=INTEGER},#{isCustomMade,jdbcType=TINYINT}, #{unit,jdbcType=CHAR},
+      #{explain,jdbcType=VARCHAR},#{isExtProperties,jdbcType=TINYINT},#{formatTotalProfit,jdbcType=REAL},
+      #{productPurchasePrice,jdbcType=REAL},#{areaMoney,jdbcType=REAL},#{cDisplay,jdbcType=TINYINT},
+      #{bDisplay,jdbcType=TINYINT},#{freightTemplateId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallBasicCategoryModelFormat" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_basic_category_model_format
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="walt != null" >
+        walt,
+      </if>
+      <if test="isSmart != null" >
+        is_smart,
+      </if>
+      <if test="categoryModelFormatNumber != null" >
+        category_model_format_number,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryModelId != null" >
+        category_model_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="discountPrice != null" >
+        discount_price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="realStock != null" >
+        real_stock,
+      </if>
+      <if test="warnCount != null" >
+        warn_count,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="propertyValueCombine != null" >
+        property_value_combine,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="isCustomMade != null" >
+        is_custom_made,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="explain != null" >
+        `explain`,
+      </if>
+      <if test="isExtProperties != null" >
+        is_ext_properties,
+      </if>
+      <if test="formatTotalProfit != null" >
+        format_total_profit,
+      </if>
+      <if test="productPurchasePrice != null" >
+        product_purchase_price,
+      </if>
+      <if test="areaMoney != null" >
+        area_money,
+      </if>
+      <if test="cDisplay != null" >
+        c_display,
+      </if>
+      <if test="bDisplay != null" >
+        b_display,
+      </if>
+      <if test="freightTemplateId != null" >
+        freight_template_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="walt != null" >
+        #{walt,jdbcType=INTEGER},
+      </if>
+      <if test="isSmart != null" >
+        #{isSmart,jdbcType=TINYINT},
+      </if>
+      <if test="categoryModelFormatNumber != null" >
+        #{categoryModelFormatNumber,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryModelId != null" >
+        #{categoryModelId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=REAL},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="realStock != null" >
+        #{realStock,jdbcType=INTEGER},
+      </if>
+      <if test="warnCount != null" >
+        #{warnCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="propertyValueCombine != null" >
+        #{propertyValueCombine,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="isCustomMade != null" >
+        #{isCustomMade,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=CHAR},
+      </if>
+      <if test="explain != null" >
+        #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="isExtProperties != null" >
+        #{isExtProperties,jdbcType=TINYINT},
+      </if>
+      <if test="formatTotalProfit != null" >
+        #{formatTotalProfit,jdbcType=REAL},
+      </if>
+      <if test="productPurchasePrice != null" >
+        #{productPurchasePrice,jdbcType=REAL},
+      </if>
+      <if test="areaMoney != null" >
+        #{areaMoney,jdbcType=REAL},
+      </if>
+      <if test="cDisplay != null" >
+        #{cDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="bDisplay != null" >
+        #{bDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="freightTemplateId != null" >
+        #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallBasicCategoryModelFormat" >
+    update tbl_mall_basic_category_model_format
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=CHAR},
+      </if>
+      <if test="walt != null" >
+        walt = #{walt,jdbcType=INTEGER},
+      </if>
+      <if test="isSmart != null" >
+        is_smart = #{isSmart,jdbcType=TINYINT},
+      </if>
+      <if test="categoryModelFormatNumber != null" >
+        category_model_format_number = #{categoryModelFormatNumber,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryModelId != null" >
+        category_model_id = #{categoryModelId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="discountPrice != null" >
+        discount_price = #{discountPrice,jdbcType=REAL},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="realStock != null" >
+        real_stock = #{realStock,jdbcType=INTEGER},
+      </if>
+      <if test="warnCount != null" >
+        warn_count = #{warnCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="propertyValueCombine != null" >
+        property_value_combine = #{propertyValueCombine,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="isCustomMade != null" >
+        is_custom_made = #{isCustomMade,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=CHAR},
+      </if>
+      <if test="explain != null" >
+        `explain` = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="isExtProperties != null" >
+        is_ext_properties = #{isExtProperties,jdbcType=TINYINT},
+      </if>
+      <if test="formatTotalProfit != null" >
+       format_total_profit= #{formatTotalProfit,jdbcType=REAL},
+      </if>
+      <if test="productPurchasePrice != null" >
+       product_purchase_price = #{productPurchasePrice,jdbcType=REAL},
+      </if>
+      <if test="areaMoney != null" >
+       area_money = #{areaMoney,jdbcType=REAL},
+      </if>
+      <if test="cDisplay != null" >
+        c_display = #{cDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="bDisplay != null" >
+        b_display = #{bDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="freightTemplateId != null" >
+        freight_template_id = #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallBasicCategoryModelFormat" >
+    update tbl_mall_basic_category_model_format
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=CHAR},
+      walt = #{walt,jdbcType=INTEGER},
+      is_smart = #{isSmart,jdbcType=TINYINT},
+      category_model_format_number = #{categoryModelFormatNumber,jdbcType=CHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      category_model_id = #{categoryModelId,jdbcType=BIGINT},
+      price = #{price,jdbcType=REAL},
+      discount_price = #{discountPrice,jdbcType=REAL},
+      stock = #{stock,jdbcType=INTEGER},
+      real_stock = #{realStock,jdbcType=INTEGER},
+      warn_count = #{warnCount,jdbcType=INTEGER},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      property_value_combine = #{propertyValueCombine,jdbcType=VARCHAR},
+      length = #{length,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      is_custom_made = #{isCustomMade,jdbcType=TINYINT},
+      unit = #{unit,jdbcType=CHAR},
+      `explain` = #{explain,jdbcType=VARCHAR},
+      is_ext_properties = #{isExtProperties,jdbcType=TINYINT},
+      format_total_profit= #{formatTotalProfit,jdbcType=REAL},
+      product_purchase_price= #{productPurchasePrice,jdbcType=REAL},
+      area_money= #{areaMoney,jdbcType=REAL},
+      c_display = #{cDisplay,jdbcType=TINYINT},
+      b_display = #{bDisplay,jdbcType=TINYINT},
+      freight_template_id = #{freightTemplateId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 查询某个型号下的规格 start -->
+  <select id="queryFormatsByModelId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model_format
+    where category_model_id = #{modelId,jdbcType=BIGINT} 
+    <if test="invalid!=null">
+    	and invalid = #{invalid,jdbcType=TINYINT}
+    </if>
+    order by price 
+  </select>
+  
+  <!-- 根据可见性查询某个型号下的规格 start -->
+  <select id="queryFormatsByModelIdAndDisplay" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model_format
+    where category_model_id = #{modelId,jdbcType=BIGINT} 
+    <if test="invalid!=null">
+    	and invalid = #{invalid,jdbcType=TINYINT}
+    </if>
+    <if test="cDisplay!=null">
+    	and c_display = #{cDisplay,jdbcType=TINYINT}
+    </if>
+    <if test="bDisplay!=null">
+    	and b_display = #{bDisplay,jdbcType=TINYINT}
+    </if>
+    order by price 
+  </select>
+  
+  <!-- end  -->
+  <!-- 反向查询某个的规格 start -->
+  <select id="queryFormatByCombine" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model_format
+    where property_value_combine = #{combine,jdbcType=VARCHAR} and invalid = 0 
+  </select>
+  <!-- end  -->
+  <update id="updateStockById">
+    update tbl_mall_basic_category_model_format
+    set real_stock = real_stock+#{stock} where id=#{id}
+  </update>
+  <!-- 更新价格和优惠价 -->
+  <update id="updateFormatPriceAndDic">
+    update tbl_mall_basic_category_model_format
+    <set>
+    	<if test="price>0">
+	    	price = #{price,jdbcType=REAL},    	
+    	</if>
+    	<if test="discountPrice>0">
+	      	discount_price = #{discountPrice,jdbcType=REAL}
+    	</if>
+    </set>
+     where id=#{id}
+  </update>
+  
+  <select id="selectByModelId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_mall_basic_category_model_format
+		where category_model_id =
+		#{modelId,jdbcType=BIGINT}  limit 100
+   </select>
+   <select id="getCategoryModelFormat" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+ 	from tbl_mall_basic_category_model_format where category_model_id=#{modelId} ORDER BY #{column} #{orderBy} ,id asc LIMIT 1
+   </select>
+</mapper>

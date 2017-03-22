@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.ProductPicDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallProductPic" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="product_model_format_id" property="productModelFormatId" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_id, product_model_format_id, url, sort, status, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_pic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryPics" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_pic
+    <where>
+    	<if test="productId!=null">
+    		product_id = #{productId,jdbcType=BIGINT}
+    	</if>
+    	<if test="formatId!=null">
+    		and  product_model_format_id= #{formatId,jdbcType=BIGINT}
+    	</if>
+    	<if test="type!=null">
+    		and  type=#{type,jdbcType=TINYINT}
+    	</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_product_pic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallProductPic" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product_pic (id, product_id, product_model_format_id, 
+      url, sort, status, 
+      type)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productModelFormatId,jdbcType=BIGINT}, 
+      #{url,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{type,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallProductPic" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productModelFormatId != null" >
+        product_model_format_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productModelFormatId != null" >
+        #{productModelFormatId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallProductPic" >
+    update tbl_mall_product_pic
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productModelFormatId != null" >
+        product_model_format_id = #{productModelFormatId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallProductPic" >
+    update tbl_mall_product_pic
+    set product_id = #{productId,jdbcType=BIGINT},
+      product_model_format_id = #{productModelFormatId,jdbcType=BIGINT},
+      url = #{url,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 查询图片 start -->
+  <select id="queryProductPicByFormatId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_pic
+    <where>
+    	<if test="productId!=null">
+    		product_id = #{productId,jdbcType=BIGINT}
+    	</if>
+    	<if test="status!=null">
+    		and status = #{status,jdbcType=TINYINT}
+    	</if>
+    	<if test="type!=null">
+    		and type = #{type,jdbcType=TINYINT}
+    	</if>
+    	<if test="formatId!=null">
+    		and product_model_format_id = #{formatId,jdbcType=BIGINT}
+    	</if>
+    </where>
+  </select>
+  <!-- end -->
+</mapper>

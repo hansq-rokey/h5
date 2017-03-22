@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.ProductDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallProduct" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="feature" property="feature" jdbcType="VARCHAR" />
+    <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
+    <result column="detail_url_app" property="detailUrlApp" jdbcType="VARCHAR" />
+    <result column="category_code" property="categoryCode" jdbcType="CHAR" />
+    <result column="category_model_code" property="categoryModelCode" jdbcType="CHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="category_model_id" property="categoryModelId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="installation_cost" property="installationCost" jdbcType="REAL" />
+    <result column="is_special_offers" property="isSpecialOffers" jdbcType="TINYINT" />
+    <result column="is_distribution" property="isDistribution" jdbcType="TINYINT" />
+    <result column="is_company_product" property="isCompanyProduct" jdbcType="TINYINT" />
+    <result column="is_material_calculate" property="isMaterialCalculate" jdbcType="TINYINT" />
+    <result column="total_profit" property="totalProfit" jdbcType="REAL" />
+    <result column="is_use_deposit" property="isUseDeposit" jdbcType="TINYINT" />
+    <result column="deposit_money" property="depositMoney" jdbcType="REAL" />
+    <result column="is_display_materiel" property="isDisplayMateriel" jdbcType="TINYINT" />
+    <result column="product_purchase_price" property="productPurchasePrice" jdbcType="REAL"/>
+    <result column="is_set_area_profit" property="isSetAreaProfit" jdbcType="TINYINT" />
+    <result column="area_money" property="areaMoney" jdbcType="REAL" />
+    <result column="c_display" property="cDisplay" jdbcType="TINYINT" />
+    <result column="b_display" property="bDisplay" jdbcType="TINYINT" />
+    <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" />
+    <result column="special_type" property="specialType" jdbcType="TINYINT" />
+    <association property="basicCategory" column="category_id" select="com.papabear.product.dao.BasicCategoryDao.selectByPrimaryKey"/>
+    <association property="basicCategoryModel" column="category_model_id" select="com.papabear.product.dao.BasicCategoryModelDao.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, feature, detail_url, detail_url_app, category_id, category_code, category_model_id, 
+    category_model_code, creator_id, status, create_date_time, update_time, installation_cost, 
+    is_special_offers, is_distribution, is_company_product, total_profit, is_use_deposit, is_material_calculate,
+    deposit_money,is_display_materiel,product_purchase_price,is_set_area_profit,area_money,c_display,b_display,freight_template_id,special_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 查询产品信息 -->
+  <resultMap id="AllResultMap" type="com.papabear.product.entity.MallProduct" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="feature" property="feature" jdbcType="VARCHAR" />
+    <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
+    <result column="detail_url_app" property="detailUrlApp" jdbcType="VARCHAR" />
+    <result column="category_code" property="categoryCode" jdbcType="CHAR" />
+    <result column="category_model_code" property="categoryModelCode" jdbcType="CHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	<result column="installation_cost" property="installationCost" jdbcType="REAL" />
+	<result column="is_special_offers" property="isSpecialOffers" jdbcType="TINYINT" />
+	<result column="is_distribution" property="isDistribution" jdbcType="TINYINT" />
+    <result column="is_company_product" property="isCompanyProduct" jdbcType="TINYINT" />
+    <result column="is_material_calculate" property="isMaterialCalculate" jdbcType="TINYINT" />   
+    <result column="total_profit" property="totalProfit" jdbcType="REAL" />
+    <result column="is_use_deposit" property="isUseDeposit" jdbcType="TINYINT" />
+    <result column="deposit_money" property="depositMoney" jdbcType="REAL" />
+    <result column="is_display_materiel" property="isDisplayMateriel" jdbcType="TINYINT" /> 
+    <result column="product_purchase_price" property="productPurchasePrice" jdbcType="REAL"/>
+    <result column="is_set_area_profit" property="isSetAreaProfit" jdbcType="TINYINT" />
+    <result column="area_money" property="areaMoney" jdbcType="REAL" />
+    <result column="c_display" property="cDisplay" jdbcType="TINYINT" />
+    <result column="b_display" property="bDisplay" jdbcType="TINYINT" />   
+    <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" />
+    <result column="special_type" property="specialType" jdbcType="TINYINT" />
+    <association property="basicCategory" column="category_id" select="com.papabear.product.dao.BasicCategoryDao.selectByPrimaryKey"/>
+    <association property="basicCategoryModel" column="category_model_id" select="com.papabear.product.dao.BasicCategoryModelDao.selectByPrimaryKey"/>
+  </resultMap>
+  <select id="queryProductByStatus" resultMap="AllResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    <where>
+    	<if test="status!=null">
+    		status = #{status,jdbcType=TINYINT}
+    	</if>
+    </where>
+    order by id desc 
+    limit #{numbers,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="queryProductByStatusCount" resultType="int" parameterType="java.lang.Byte" >
+    select 
+    count(*)
+    from tbl_mall_product
+    <where>
+    	<if test="status!=null">
+    		status = #{status,jdbcType=TINYINT}
+    	</if>
+    </where>
+    order by id desc
+  </select>
+  <!--查询产品信息 end   -->
+  
+    <select id="queryProductBySystem" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    <where>
+    	<if test="status!=null">
+    		status = #{status,jdbcType=TINYINT}
+    	</if>
+    	<if test="cType!=null">
+    		and c_display= #{cType,jdbcType=TINYINT}
+    	</if>
+    	<if test="bType!=null">
+    		and b_display= #{bType,jdbcType=TINYINT}
+    	</if>
+    </where>
+    order by id desc
+  </select>
+  <!-- 查询代理商代理的商品 -->
+  <select id="queryProducts" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    <where>
+    	<if test="list != null and list.size>0">
+			and id in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+    	<if test="status!=null">
+    		and status = #{status,jdbcType=TINYINT}
+    	</if>
+    	<if test="cType!=null">
+    		and c_display= #{cType,jdbcType=TINYINT}
+    	</if>
+    	<if test="bType!=null">
+    		and b_display= #{bType,jdbcType=TINYINT}
+    	</if>
+    </where>
+    order by id
+  </select>
+  
+  <!-- 根据规格查询产品 start-->
+  <select id="queryProductByFormat" resultMap="AllResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    where  category_model_id=#{modelId,jdbcType=BIGINT} and status=1
+  </select>
+  <!-- end  -->
+  
+  <select id="queryProductByTemplateId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    where freight_template_id=#{freightTemplateId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product (id, title, feature, 
+      detail_url, detail_url_app, category_id, 
+      category_code, category_model_id, category_model_code, 
+      creator_id, status, create_date_time, 
+      update_time, installation_cost, is_special_offers, 
+      is_distribution, is_company_product, total_profit, 
+      is_use_deposit, deposit_money,is_display_materiel,
+      product_purchase_price,is_set_area_profit,area_money,
+      c_display,b_display,is_material_calculate,freight_template_id,special_type)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{feature,jdbcType=VARCHAR}, 
+      #{detailUrl,jdbcType=VARCHAR}, #{detailUrlApp,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT}, 
+      #{categoryCode,jdbcType=CHAR}, #{categoryModelId,jdbcType=BIGINT}, #{categoryModelCode,jdbcType=CHAR}, 
+      #{creatorId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{createDateTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{installationCost,jdbcType=REAL}, #{isSpecialOffers,jdbcType=TINYINT}, 
+      #{isDistribution,jdbcType=TINYINT}, #{isCompanyProduct,jdbcType=TINYINT}, #{totalProfit,jdbcType=REAL}, 
+      #{isUseDeposit,jdbcType=TINYINT}, #{depositMoney,jdbcType=REAL},#{isDisplayMateriel,jdbcType=TINYINT},
+      #{productPurchasePrice,jdbcType=REAL},#{isSetAreaProfit,jdbcType=TINYINT},#{areaMoney,jdbcType=REAL},
+      #{cDisplay,jdbcType=TINYINT},#{bDisplay,jdbcType=TINYINT},#{isMaterialCalculate,jdbcType=TINYINT},
+      #{freightTemplateId,jdbcType=BIGINT},#{specialType,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="feature != null" >
+        feature,
+      </if>
+      <if test="detailUrl != null" >
+        detail_url,
+      </if>
+      <if test="detailUrlApp != null" >
+        detail_url_app,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryCode != null" >
+        category_code,
+      </if>
+      <if test="categoryModelId != null" >
+        category_model_id,
+      </if>
+      <if test="categoryModelCode != null" >
+        category_model_code,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="installationCost != null" >
+        installation_cost,
+      </if>
+      <if test="isSpecialOffers != null" >
+        is_special_offers,
+      </if>
+      <if test="isDistribution != null" >
+        is_distribution,
+      </if>
+      <if test="isCompanyProduct != null" >
+        is_company_product,
+      </if>
+      <if test="totalProfit != null" >
+        total_profit,
+      </if>
+      <if test="isUseDeposit != null" >
+        is_use_deposit,
+      </if>
+      <if test="depositMoney != null" >
+        deposit_money,
+      </if>
+      <if test="isDisplayMateriel != null" >
+        is_display_materiel,
+      </if>
+      <if test="productPurchasePrice != null" >
+        product_purchase_price,
+      </if>
+      <if test="isSetAreaProfit != null" >
+        is_set_area_profit,
+      </if>
+      <if test="areaMoney != null" >
+        area_money,
+      </if>
+       <if test="cDisplay != null" >
+        c_pisplay,
+      </if>
+      <if test="bDisplay != null" >
+        b_pisplay,
+      </if>
+      <if test="isMaterialCalculate != null" >
+        is_material_calculate,
+      </if>
+      <if test="freightTemplateId != null" >
+        freight_template_id,
+      </if>
+      <if test="specialType != null" >
+        special_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null" >
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrl != null" >
+        #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrlApp != null" >
+        #{detailUrlApp,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryCode != null" >
+        #{categoryCode,jdbcType=CHAR},
+      </if>
+      <if test="categoryModelId != null" >
+        #{categoryModelId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryModelCode != null" >
+        #{categoryModelCode,jdbcType=CHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installationCost != null" >
+        #{installationCost,jdbcType=REAL},
+      </if>
+      <if test="isSpecialOffers != null" >
+        #{isSpecialOffers,jdbcType=TINYINT},
+      </if>
+      <if test="isDistribution != null" >
+        #{isDistribution,jdbcType=TINYINT},
+      </if>
+      <if test="isCompanyProduct != null" >
+        #{isCompanyProduct,jdbcType=TINYINT},
+      </if>
+      <if test="totalProfit != null" >
+        #{totalProfit,jdbcType=REAL},
+      </if>
+      <if test="isUseDeposit != null" >
+        #{isUseDeposit,jdbcType=TINYINT},
+      </if>
+      <if test="depositMoney != null" >
+        #{depositMoney,jdbcType=REAL},
+      </if>
+      <if test="isDisplayMateriel != null" >
+        #{isDisplayMateriel,jdbcType=TINYINT},
+      </if>
+      <if test="productPurchasePrice != null" >
+        #{productPurchasePrice,jdbcType=REAL},
+      </if>
+       <if test="isSetAreaProfit != null" >
+        #{isSetAreaProfit,jdbcType=TINYINT},
+      </if>
+      <if test="areaMoney != null" >
+        #{areaMoney,jdbcType=REAL},
+      </if>
+       <if test="cDisplay != null" >
+        #{cDisplay,jdbcType=TINYINT},
+      </if>
+       <if test="bDisplay != null" >
+        #{bDisplay,jdbcType=TINYINT},
+      </if>
+       <if test="isMaterialCalculate != null" >
+        #{isMaterialCalculate,jdbcType=TINYINT},
+      </if>
+      <if test="freightTemplateId != null" >
+        #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="specialType != null" >
+      	#{specialType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallProduct" >
+    update tbl_mall_product
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null" >
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrl != null" >
+        detail_url = #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrlApp != null" >
+        detail_url_app = #{detailUrlApp,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryCode != null" >
+        category_code = #{categoryCode,jdbcType=CHAR},
+      </if>
+      <if test="categoryModelId != null" >
+        category_model_id = #{categoryModelId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryModelCode != null" >
+        category_model_code = #{categoryModelCode,jdbcType=CHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installationCost != null" >
+        installation_cost = #{installationCost,jdbcType=REAL},
+      </if>
+      <if test="isSpecialOffers != null" >
+        is_special_offers = #{isSpecialOffers,jdbcType=TINYINT},
+      </if>
+      <if test="isDistribution != null" >
+        is_distribution = #{isDistribution,jdbcType=TINYINT},
+      </if>
+      <if test="isCompanyProduct != null" >
+        is_company_product = #{isCompanyProduct,jdbcType=TINYINT},
+      </if>
+      <if test="totalProfit != null" >
+        total_profit = #{totalProfit,jdbcType=REAL},
+      </if>
+      <if test="isUseDeposit != null" >
+        is_use_deposit = #{isUseDeposit,jdbcType=TINYINT},
+      </if>
+      <if test="depositMoney != null" >
+        deposit_money = #{depositMoney,jdbcType=REAL},
+      </if>
+      <if test="isDisplayMateriel != null" >
+        is_display_materiel = #{isDisplayMateriel,jdbcType=TINYINT},
+      </if>
+      <if test="productPurchasePrice != null" >
+       product_purchase_price = #{productPurchasePrice,jdbcType=REAL},
+      </if>
+       <if test="isSetAreaProfit != null" >
+        is_set_area_profit = #{isSetAreaProfit,jdbcType=TINYINT},
+      </if>
+      <if test="areaMoney != null" >
+        area_money = #{areaMoney,jdbcType=REAL},
+      </if>
+       <if test="cDisplay != null" >
+        c_display = #{cDisplay,jdbcType=TINYINT},
+      </if>
+       <if test="bDisplay != null" >
+        b_display = #{bDisplay,jdbcType=TINYINT},
+      </if>
+       <if test="isMaterialCalculate != null" >
+        is_material_calculate = #{isMaterialCalculate,jdbcType=TINYINT},
+      </if>
+      <if test="freightTemplateId != null" >
+        freight_template_id = #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="specialType != null" >
+      	special_type = #{specialType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallProduct" >
+    update tbl_mall_product
+    set title = #{title,jdbcType=VARCHAR},
+      feature = #{feature,jdbcType=VARCHAR},
+      detail_url = #{detailUrl,jdbcType=VARCHAR},
+      detail_url_app = #{detailUrlApp,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      category_code = #{categoryCode,jdbcType=CHAR},
+      category_model_id = #{categoryModelId,jdbcType=BIGINT},
+      category_model_code = #{categoryModelCode,jdbcType=CHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      installation_cost = #{installationCost,jdbcType=REAL},
+      is_special_offers = #{isSpecialOffers,jdbcType=TINYINT},
+      is_distribution = #{isDistribution,jdbcType=TINYINT},
+      is_company_product = #{isCompanyProduct,jdbcType=TINYINT},
+      total_profit = #{totalProfit,jdbcType=REAL},
+      is_use_deposit = #{isUseDeposit,jdbcType=TINYINT},
+      deposit_money = #{depositMoney,jdbcType=REAL},
+      is_display_materiel = #{isDisplayMateriel,jdbcType=TINYINT},
+      product_purchase_price = #{productPurchasePrice,jdbcType=REAL},
+      is_set_area_profit = #{isSetAreaProfit,jdbcType=TINYINT},
+      area_money = #{areaMoney,jdbcType=REAL},
+      c_display = #{cDisplay,jdbcType=TINYINT},
+      b_display = #{bDisplay,jdbcType=TINYINT},
+      is_material_calculate = #{isMaterialCalculate,jdbcType=TINYINT},
+      freight_template_id = #{freightTemplateId,jdbcType=BIGINT},
+      special_type = #{specialType,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateProductByModelId">
+    update tbl_mall_product
+    set title = #{title,jdbcType=VARCHAR},
+      update_time =now()
+    where category_model_id = #{modelId,jdbcType=BIGINT}
+  </update>
+  <!-- 获取产品详细信息 -->
+  <select id="getMallProduct" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    where id = #{id,jdbcType=BIGINT} and status=#{status,jdbcType=TINYINT}
+  </select>
+  <!-- 通过型号ID获取产品详细信息 -->
+  <select id="getProductByModeleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    where category_model_id = #{id,jdbcType=BIGINT} and status=1
+  </select>
+  
+  <select id="selectProductListByIds" resultMap="BaseResultMap">
+		Select
+		id,title,detail_url
+		from tbl_mall_product where status=1  
+		<if test="list != null and list.size>0">
+			and id in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="list==null or list.size==0">
+			and 1=0
+		</if>
+		limit 100
+	</select>
+	<select id="getProductIdAndTitleList" resultMap="BaseResultMap">
+    select 
+    id,title,detail_url
+    from tbl_mall_product
+    where status=1
+  </select>
+  <resultMap id="BaseResultMapListFormat" type="com.papabear.product.entity.MallProduct" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="feature" property="feature" jdbcType="VARCHAR" />
+    <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
+    <result column="detail_url_app" property="detailUrlApp" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="category_code" property="categoryCode" jdbcType="CHAR" />
+    <result column="category_model_code" property="categoryModelCode" jdbcType="CHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="category_model_id" property="categoryModelId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="installation_cost" property="installationCost" jdbcType="REAL" />
+    <result column="is_special_offers" property="isSpecialOffers" jdbcType="TINYINT" />
+    <result column="is_distribution" property="isDistribution" jdbcType="TINYINT" />
+    <result column="is_company_product" property="isCompanyProduct" jdbcType="TINYINT" />
+    <result column="is_material_calculate" property="isMaterialCalculate" jdbcType="TINYINT" />    
+    <result column="total_profit" property="totalProfit" jdbcType="REAL" />
+    <result column="is_use_deposit" property="isUseDeposit" jdbcType="TINYINT" />
+    <result column="deposit_money" property="depositMoney" jdbcType="REAL" />
+    <result column="is_display_materiel" property="isDisplayMateriel" jdbcType="TINYINT" />
+    <result column="product_purchase_price" property="productPurchasePrice" jdbcType="REAL"/>
+    <result column="is_set_area_profit" property="isSetAreaProfit" jdbcType="TINYINT" />
+    <result column="area_money" property="areaMoney" jdbcType="REAL" />
+    <result column="c_display" property="cDisplay" jdbcType="TINYINT" />
+    <result column="b_display" property="bDisplay" jdbcType="TINYINT" />  
+    <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" /> 
+    <result column="special_type" property="specialType" jdbcType="TINYINT" /> 
+    <collection property="formstList" column="category_model_id"
+			select="com.papabear.product.dao.BasicCategoryModelFormatDao.selectByModelId" />
+  </resultMap>  
+  <select id="getProductListFormatByPrimaryKey" resultMap="BaseResultMapListFormat" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product
+    where id = #{id,jdbcType=BIGINT} and status=1
+  </select>
+  
+  <select id="selectListMallProduct" resultMap="BaseResultMapListFormat">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_mall_product
+		where status = #{status,jdbcType=TINYINT} and c_display=1 limit 
+		#{start,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+	</select>
+</mapper>

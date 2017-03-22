@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.ProductCommentPicDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.ProductCommentPic" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="comment_id" property="commentId" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="physics_address" property="physicsAddress" jdbcType="VARCHAR" />
+    <result column="pic_name" property="picName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, comment_id, url, physics_address, pic_name, sort, create_date_time, 
+    status, invalid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product_comment_pic
+    where id = #{id,jdbcType=BIGINT} and invalid=0
+  </select>
+  <select id="queryListByCommentIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product_comment_pic
+    where user_id = #{userId,jdbcType=BIGINT} and comment_id = #{commentId,jdbcType=BIGINT} and invalid=0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_product_comment_pic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.ProductCommentPic" >
+    insert into tbl_product_comment_pic (id, user_id, comment_id, 
+      url, physics_address, pic_name, 
+      sort, create_date_time, status, 
+      invalid)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{commentId,jdbcType=BIGINT}, 
+      #{url,jdbcType=VARCHAR}, #{physicsAddress,jdbcType=VARCHAR}, #{picName,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{createDateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{invalid,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.ProductCommentPic" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_product_comment_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="physicsAddress != null" >
+        physics_address,
+      </if>
+      <if test="picName != null" >
+        pic_name,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="commentId != null" >
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="physicsAddress != null" >
+        #{physicsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="picName != null" >
+        #{picName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.ProductCommentPic" >
+    update tbl_product_comment_pic
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="commentId != null" >
+        comment_id = #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="physicsAddress != null" >
+        physics_address = #{physicsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="picName != null" >
+        pic_name = #{picName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.ProductCommentPic" >
+    update tbl_product_comment_pic
+    set user_id = #{userId,jdbcType=BIGINT},
+      comment_id = #{commentId,jdbcType=BIGINT},
+      url = #{url,jdbcType=VARCHAR},
+      physics_address = #{physicsAddress,jdbcType=VARCHAR},
+      pic_name = #{picName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   <update id="updateCommentPicByUserId" parameterType="com.papabear.product.entity.ProductCommentPic" >
+    update tbl_product_comment_pic
+    <set >
+      <if test="commentId != null" >
+        comment_id = #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="physicsAddress != null" >
+        physics_address = #{physicsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="picName != null" >
+        pic_name = #{picName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateCommentPic">
+  	update tbl_product_comment_pic
+    	set comment_id = #{commentId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT} and comment_id is NULL
+  </update>
+</mapper>

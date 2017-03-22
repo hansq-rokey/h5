@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.BasicCategoryModelDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallBasicCategoryModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, category_id, create_date_time, update_time, creator_id, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="queryResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 查询所有型号 start -->
+    <resultMap id="queryResultMap" type="com.papabear.product.entity.MallBasicCategoryModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <association property="category" column="category_id" select="com.papabear.product.dao.BasicCategoryDao.selectByPrimaryKey"></association>
+  </resultMap>
+  <select id="queryAll" resultMap="queryResultMap" parameterType="java.lang.Byte" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model
+    <where>
+    	<if test="status!=null">
+    		status= #{status,jdbcType=BIGINT}
+    	</if>
+    </where>
+    order by id desc
+  </select>
+  <!-- 查询所有型号 end -->
+  <!-- 查询没有被发布商品的型号信息  -->
+  <select id="queryModelByNotProduct" resultMap="queryResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    FROM 
+    	tbl_mall_basic_category_model 
+    WHERE 
+    	id NOT IN (SELECT category_model_id FROM tbl_mall_product WHERE `status` in (1,-1))
+  </select>
+  <!-- end -->
+  <!-- 编码校验 start -->
+  <select id="checkCode" resultMap="queryResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model
+    where category_id = #{categoryId,jdbcType=BIGINT} and code=#{code,jdbcType=CHAR}
+  </select>
+  <!-- end -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_basic_category_model
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallBasicCategoryModel" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_basic_category_model (id, name, code, category_id, 
+      create_date_time, update_time, creator_id, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=CHAR}, #{categoryId,jdbcType=BIGINT}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallBasicCategoryModel" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_basic_category_model
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallBasicCategoryModel" >
+    update tbl_mall_basic_category_model
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallBasicCategoryModel" >
+    update tbl_mall_basic_category_model
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=CHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 库存查询start -->
+  <resultMap id="queryFormatResultMap" type="com.papabear.product.entity.MallBasicCategoryModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  	<collection property="formats" ofType="com.papabear.product.entity.MallBasicCategoryModelFormat" column="id" select="getFormats"/>
+  </resultMap>
+  <select id="queryAllFormat" resultMap="queryFormatResultMap">
+    select id,name
+    from tbl_mall_basic_category_model
+    <where>
+   		status = 1
+    	<if test="keywords!=null">
+    		and name like concat('%', #{keywords}, '%')
+    	</if>
+    	<if test="startTime!=null and endTime!=null">
+    		and create_date_time &gt; #{startTime,jdbcType=TIMESTAMP} and  create_date_time  &lt; #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    </where>
+    and id IN (SELECT category_model_id FROM tbl_mall_product WHERE `status`=1)
+    order by create_date_time desc
+  </select>
+  <resultMap id="BaseFormResultMap" type="com.papabear.product.entity.MallBasicCategoryModelFormat" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="walt" property="walt" jdbcType="INTEGER" />
+    <result column="is_smart" property="isSmart" jdbcType="TINYINT" />
+    <result column="category_model_format_number" property="categoryModelFormatNumber" jdbcType="CHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="category_model_id" property="categoryModelId" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="discount_price" property="discountPrice" jdbcType="REAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="real_stock" property="realStock" jdbcType="INTEGER" />
+    <result column="warn_count" property="warnCount" jdbcType="INTEGER" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Form_Column_List" >
+    id, name, code, walt, is_smart, category_model_format_number, category_id, category_model_id, 
+    price, discount_price, stock, create_date_time, update_time, creator_id, status,warn_count,real_stock
+  </sql>
+  <!-- 库存查询end -->
+  
+  <select id="selectByIds" resultMap="queryResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_mall_basic_category_model where 1=1  
+		<if test="list != null and list.size>0">
+			and id in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="list==null or list.size==0">
+			and 1=0
+		</if>
+	</select>
+  <select id="queryByCategoryId" resultMap="queryResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_basic_category_model
+    where category_id = #{categoryId,jdbcType=BIGINT} and status= 1
+  </select>
+  
+  <!-- 库存查询start -->
+  <resultMap id="queryStockResultMap" type="com.papabear.product.entity.MallBasicCategoryModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  	<collection property="formats" ofType="com.papabear.product.entity.MallBasicCategoryModelFormat" column="id" select="getFormats"/>
+  </resultMap>
+  <select id="queryStockAll" resultMap="queryStockResultMap">
+    select id,name
+    from tbl_mall_basic_category_model
+    <where>
+   		status = 1
+    	<if test="keywords!=null">
+    		and name like concat('%', #{keywords}, '%')
+    	</if>
+    	<if test="startTime!=null and endTime!=null">
+    		and create_date_time &gt; #{startTime,jdbcType=TIMESTAMP} and  create_date_time  &lt; #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    </where>
+    order by create_date_time desc
+  </select>
+  <select id="getFormats" resultMap="BaseFormResultMap" parameterType="java.lang.Long">
+    select 
+    <include refid="Base_Form_Column_List" />
+    from tbl_mall_basic_category_model_format
+    where category_model_id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 库存查询end -->
+</mapper>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.MallProductPropertiesValueDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallProductPropertiesValue" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="properties_id" property="propertiesId" jdbcType="BIGINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="TINYINT" />
+    <result column="is_custom_made" property="isCustomMade" jdbcType="TINYINT" />
+    <result column="display" property="display" jdbcType="TINYINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="explain" property="explain" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_date_time, update_time, status, properties_id, invalid, value, material_id, 
+    price, image_url, is_default, is_custom_made, display, sort, `explain`
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_properties_value
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryPropertiesValuesByPropertiesId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_properties_value
+    where properties_id = #{propertiesId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPropertiesId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_mall_product_properties_value
+		where properties_id = #{propertiesId,jdbcType=INTEGER} and 
+		(display = 1 or display = 2) and 
+		invalid = #{invalid,jdbcType=TINYINT} and 
+		is_custom_made = 0
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_product_properties_value
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallProductPropertiesValue" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product_properties_value (id, create_date_time, update_time, 
+      status, properties_id, invalid, 
+      value, material_id, price, 
+      image_url, is_default, is_custom_made, 
+      display, sort, `explain`)
+    values (#{id,jdbcType=BIGINT}, #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{propertiesId,jdbcType=BIGINT}, #{invalid,jdbcType=TINYINT}, 
+      #{value,jdbcType=VARCHAR}, #{materialId,jdbcType=BIGINT}, #{price,jdbcType=REAL}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{isDefault,jdbcType=TINYINT}, #{isCustomMade,jdbcType=TINYINT}, 
+      #{display,jdbcType=TINYINT}, #{sort,jdbcType=INTEGER}, #{explain,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallProductPropertiesValue" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product_properties_value
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="propertiesId != null" >
+        properties_id,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="materialId != null" >
+        material_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="imageUrl != null" >
+        image_url,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="isCustomMade != null" >
+        is_custom_made,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="explain != null" >
+        `explain`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="propertiesId != null" >
+        #{propertiesId,jdbcType=BIGINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        #{materialId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="isCustomMade != null" >
+        #{isCustomMade,jdbcType=TINYINT},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="explain != null" >
+        #{explain,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallProductPropertiesValue" >
+    update tbl_mall_product_properties_value
+    <set >
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="propertiesId != null" >
+        properties_id = #{propertiesId,jdbcType=BIGINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        material_id = #{materialId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="imageUrl != null" >
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="isCustomMade != null" >
+        is_custom_made = #{isCustomMade,jdbcType=TINYINT},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="explain != null" >
+        explain = #{explain,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallProductPropertiesValue" >
+    update tbl_mall_product_properties_value
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      properties_id = #{propertiesId,jdbcType=BIGINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      value = #{value,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=BIGINT},
+      price = #{price,jdbcType=REAL},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=TINYINT},
+      is_custom_made = #{isCustomMade,jdbcType=TINYINT},
+      display = #{display,jdbcType=TINYINT},
+      sort = #{sort,jdbcType=INTEGER},
+      `explain` = #{explain,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

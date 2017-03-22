@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.ProductCommentDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.ProductComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="format_id" property="formatId" jdbcType="BIGINT" />
+    <result column="commment_tag_ids" property="commmentTagIds" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="origin_type" property="originType" jdbcType="TINYINT" />
+    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="avatar_img" property="avatarImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, product_id, format_id, commment_tag_ids, description, create_date_time, 
+    update_time, status, invalid, origin_type, is_display, nick,avatar_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product_comment
+    where id = #{id,jdbcType=BIGINT} and invalid=0
+  </select>
+  <select id="queryCommentCount" resultType="int">
+		select
+		count(*)
+		from tbl_product_comment as o
+		<where>
+			<if test="productId!=null">
+				and product_id =#{productId,jdbcType=BIGINT}
+			</if>
+			<if test="status!=null">
+				and status =#{status,jdbcType=TINYINT}
+			</if>
+			and invalid=0
+		</where>
+	</select>
+ 	<select id="queryComment" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_product_comment
+		<where>
+			<if test="productId!=null">
+				and product_id =#{productId,jdbcType=BIGINT}
+			</if>
+			<if test="status!=null">
+				and status =#{status,jdbcType=TINYINT}
+			</if>
+			and invalid=0
+		</where>
+		order by id desc 
+		limit #{numbers,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_product_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.ProductComment" >
+    insert into tbl_product_comment (id, user_id, product_id, 
+      format_id, commment_tag_ids, description, 
+      create_date_time, update_time, status, 
+      invalid, origin_type, is_display, 
+      nick,avatar_img)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
+      #{formatId,jdbcType=BIGINT}, #{commmentTagIds,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{invalid,jdbcType=TINYINT}, #{originType,jdbcType=TINYINT}, #{isDisplay,jdbcType=TINYINT}, 
+      #{nick,jdbcType=VARCHAR},#{avatarImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.ProductComment" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_product_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="formatId != null" >
+        format_id,
+      </if>
+      <if test="commmentTagIds != null" >
+        commment_tag_ids,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="originType != null" >
+        origin_type,
+      </if>
+      <if test="isDisplay != null" >
+        is_display,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="avatarImg != null" >
+        avatar_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="formatId != null" >
+        #{formatId,jdbcType=BIGINT},
+      </if>
+      <if test="commmentTagIds != null" >
+        #{commmentTagIds,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="originType != null" >
+        #{originType,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        #{isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarImg != null" >
+        #{avatarImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.ProductComment" >
+    update tbl_product_comment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="formatId != null" >
+        format_id = #{formatId,jdbcType=BIGINT},
+      </if>
+      <if test="commmentTagIds != null" >
+        commment_tag_ids = #{commmentTagIds,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="originType != null" >
+        origin_type = #{originType,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        is_display = #{isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarImg != null" >
+        avatar_img = #{avatarImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.ProductComment" >
+    update tbl_product_comment
+    set user_id = #{userId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      format_id = #{formatId,jdbcType=BIGINT},
+      commment_tag_ids = #{commmentTagIds,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      origin_type = #{originType,jdbcType=TINYINT},
+      is_display = #{isDisplay,jdbcType=TINYINT},
+      nick = #{nick,jdbcType=VARCHAR},
+      avatar_img = #{avatarImg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="delBatchComment" parameterType="java.util.List">
+  	update tbl_product_comment set invalid = 1 where id in
+ 	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  			#{item}
+	 </foreach>
+  </update>
+</mapper>

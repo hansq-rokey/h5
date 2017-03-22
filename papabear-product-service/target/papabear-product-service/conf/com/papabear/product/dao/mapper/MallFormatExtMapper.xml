@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.MallFormatExtDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallFormatExt" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="category_model_format_id" property="categoryModelFormatId" jdbcType="BIGINT" />
+    <result column="property_name" property="propertyName" jdbcType="VARCHAR" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="identify" property="identify" jdbcType="CHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_model_format_id, property_name, create_date_time, identify, type, unit, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_format_ext
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryMallFormatExts" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_format_ext
+    where category_model_format_id = #{formatId,jdbcType=BIGINT}
+    <if test="type!=null">
+    	and type=#{type,jdbcType=TINYINT}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_format_ext
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallFormatExt" >
+    insert into tbl_mall_format_ext (id, category_model_format_id, property_name, 
+      create_date_time, identify, type, unit, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{categoryModelFormatId,jdbcType=BIGINT}, #{propertyName,jdbcType=VARCHAR}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{identify,jdbcType=CHAR}, #{type,jdbcType=TINYINT},
+      #{unit,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallFormatExt" >
+    insert into tbl_mall_format_ext
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryModelFormatId != null" >
+        category_model_format_id,
+      </if>
+      <if test="propertyName != null" >
+        property_name,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="identify != null" >
+        identify,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+       <if test="unit != null" >
+        unit,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categoryModelFormatId != null" >
+        #{categoryModelFormatId,jdbcType=BIGINT},
+      </if>
+      <if test="propertyName != null" >
+        #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="identify != null" >
+        #{identify,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallFormatExt" >
+    update tbl_mall_format_ext
+    <set >
+      <if test="categoryModelFormatId != null" >
+        category_model_format_id = #{categoryModelFormatId,jdbcType=BIGINT},
+      </if>
+      <if test="propertyName != null" >
+        property_name = #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="identify != null" >
+        identify = #{identify,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallFormatExt" >
+    update tbl_mall_format_ext
+    set category_model_format_id = #{categoryModelFormatId,jdbcType=BIGINT},
+      property_name = #{propertyName,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      identify = #{identify,jdbcType=CHAR},
+      type = #{type,jdbcType=TINYINT},
+      unit = #{unit,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

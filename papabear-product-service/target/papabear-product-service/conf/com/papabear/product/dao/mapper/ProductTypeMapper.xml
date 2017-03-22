@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ibaixiong.manage.dao.mall.ProductTypeDao">
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.ProductType">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bxid_4" jdbcType="CHAR" property="bxid4" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="public_version" jdbcType="VARCHAR" property="publicVersion" />
+    <result column="logo_img" jdbcType="VARCHAR" property="logoImg" />
+    <result column="reset_img" jdbcType="VARCHAR" property="resetImg" />
+    <result column="ready_yes_img" jdbcType="VARCHAR" property="readyYesImg" />
+    <result column="ready_no_img" jdbcType="VARCHAR" property="readyNoImg" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="is_smart" jdbcType="TINYINT" property="isSmart" />
+    <result column="wifi_name" jdbcType="VARCHAR" property="wifiName" />
+    <result column="wifi_password" jdbcType="VARCHAR" property="wifiPassword" />
+    <result column="wifi_host" jdbcType="CHAR" property="wifiHost" />
+    <result column="wifi_port" jdbcType="INTEGER" property="wifiPort" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_date_time" jdbcType="TIMESTAMP" property="createDateTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bxid_4, name, public_version, logo_img, reset_img, ready_yes_img, ready_no_img, 
+    description, is_smart, wifi_name, wifi_password, wifi_host, wifi_port, status, create_date_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryProductTypeByStatus" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_type
+    <where>
+    	<if test="status!=null">
+    		status = #{status,jdbcType=TINYINT}
+    	</if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_mall_product_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.ProductType">
+    insert into tbl_mall_product_type (id, bxid_4, name, 
+      public_version, logo_img, reset_img, 
+      ready_yes_img, ready_no_img, description, 
+      is_smart, wifi_name, wifi_password, 
+      wifi_host, wifi_port, status, 
+      create_date_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{bxid4,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
+      #{publicVersion,jdbcType=VARCHAR}, #{logoImg,jdbcType=VARCHAR}, #{resetImg,jdbcType=VARCHAR}, 
+      #{readyYesImg,jdbcType=VARCHAR}, #{readyNoImg,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{isSmart,jdbcType=TINYINT}, #{wifiName,jdbcType=VARCHAR}, #{wifiPassword,jdbcType=VARCHAR}, 
+      #{wifiHost,jdbcType=CHAR}, #{wifiPort,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.ProductType">
+    insert into tbl_mall_product_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bxid4 != null">
+        bxid_4,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="publicVersion != null">
+        public_version,
+      </if>
+      <if test="logoImg != null">
+        logo_img,
+      </if>
+      <if test="resetImg != null">
+        reset_img,
+      </if>
+      <if test="readyYesImg != null">
+        ready_yes_img,
+      </if>
+      <if test="readyNoImg != null">
+        ready_no_img,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="isSmart != null">
+        is_smart,
+      </if>
+      <if test="wifiName != null">
+        wifi_name,
+      </if>
+      <if test="wifiPassword != null">
+        wifi_password,
+      </if>
+      <if test="wifiHost != null">
+        wifi_host,
+      </if>
+      <if test="wifiPort != null">
+        wifi_port,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDateTime != null">
+        create_date_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bxid4 != null">
+        #{bxid4,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="publicVersion != null">
+        #{publicVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="logoImg != null">
+        #{logoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="resetImg != null">
+        #{resetImg,jdbcType=VARCHAR},
+      </if>
+      <if test="readyYesImg != null">
+        #{readyYesImg,jdbcType=VARCHAR},
+      </if>
+      <if test="readyNoImg != null">
+        #{readyNoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isSmart != null">
+        #{isSmart,jdbcType=TINYINT},
+      </if>
+      <if test="wifiName != null">
+        #{wifiName,jdbcType=VARCHAR},
+      </if>
+      <if test="wifiPassword != null">
+        #{wifiPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="wifiHost != null">
+        #{wifiHost,jdbcType=CHAR},
+      </if>
+      <if test="wifiPort != null">
+        #{wifiPort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createDateTime != null">
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.ProductType">
+    update tbl_mall_product_type
+    <set>
+      <if test="bxid4 != null">
+        bxid_4 = #{bxid4,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="publicVersion != null">
+        public_version = #{publicVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="logoImg != null">
+        logo_img = #{logoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="resetImg != null">
+        reset_img = #{resetImg,jdbcType=VARCHAR},
+      </if>
+      <if test="readyYesImg != null">
+        ready_yes_img = #{readyYesImg,jdbcType=VARCHAR},
+      </if>
+      <if test="readyNoImg != null">
+        ready_no_img = #{readyNoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isSmart != null">
+        is_smart = #{isSmart,jdbcType=TINYINT},
+      </if>
+      <if test="wifiName != null">
+        wifi_name = #{wifiName,jdbcType=VARCHAR},
+      </if>
+      <if test="wifiPassword != null">
+        wifi_password = #{wifiPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="wifiHost != null">
+        wifi_host = #{wifiHost,jdbcType=CHAR},
+      </if>
+      <if test="wifiPort != null">
+        wifi_port = #{wifiPort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createDateTime != null">
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.ProductType">
+    update tbl_mall_product_type
+    set bxid_4 = #{bxid4,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      public_version = #{publicVersion,jdbcType=VARCHAR},
+      logo_img = #{logoImg,jdbcType=VARCHAR},
+      reset_img = #{resetImg,jdbcType=VARCHAR},
+      ready_yes_img = #{readyYesImg,jdbcType=VARCHAR},
+      ready_no_img = #{readyNoImg,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      is_smart = #{isSmart,jdbcType=TINYINT},
+      wifi_name = #{wifiName,jdbcType=VARCHAR},
+      wifi_password = #{wifiPassword,jdbcType=VARCHAR},
+      wifi_host = #{wifiHost,jdbcType=CHAR},
+      wifi_port = #{wifiPort,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

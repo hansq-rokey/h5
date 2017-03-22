@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.papabear.product.dao.MallProductPropertiesDao" >
+  <resultMap id="BaseResultMap" type="com.papabear.product.entity.MallProductProperties" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="category_model_id" property="categoryModelId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="property_name" property="propertyName" jdbcType="VARCHAR" />
+    <result column="is_trace" property="isTrace" jdbcType="TINYINT" />
+    <result column="is_custom_made" property="isCustomMade" jdbcType="TINYINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="display_format" property="displayFormat" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_date_time, update_time, category_model_id, status, invalid, property_name, 
+    is_trace, is_custom_made, sort,display_format
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_properties
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 根据型号查询属性及属性值start -->
+  <resultMap id="QueryPropertiesByModelResultMap" type="com.papabear.product.entity.MallProductProperties" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date_time" property="createDateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="category_model_id" property="categoryModelId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="invalid" property="invalid" jdbcType="TINYINT" />
+    <result column="property_name" property="propertyName" jdbcType="VARCHAR" />
+    <result column="is_trace" property="isTrace" jdbcType="TINYINT" />
+    <result column="is_custom_made" property="isCustomMade" jdbcType="TINYINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="display_format" property="displayFormat" jdbcType="TINYINT" />
+    <collection property="propertiesValues" select="com.papabear.product.dao.MallProductPropertiesValueDao.queryPropertiesValuesByPropertiesId" column="id"></collection>
+  </resultMap>
+   <select id="queryMallProductPropertiesByModelId" resultMap="QueryPropertiesByModelResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_mall_product_properties
+    where category_model_id = #{modelId,jdbcType=BIGINT}
+    <if test="invalid!=null">
+    	and invalid=#{invalid,jdbcType=TINYINT}
+    </if>
+  </select>
+  <!-- end  -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_mall_product_properties
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.papabear.product.entity.MallProductProperties" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product_properties (id, create_date_time, update_time, 
+      category_model_id, status, invalid, 
+      property_name, is_trace, is_custom_made, 
+      sort,display_format)
+    values (#{id,jdbcType=BIGINT}, #{createDateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{categoryModelId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{invalid,jdbcType=TINYINT}, 
+      #{propertyName,jdbcType=VARCHAR}, #{isTrace,jdbcType=TINYINT}, #{isCustomMade,jdbcType=TINYINT}, 
+      #{sort,jdbcType=INTEGER},#{displayFormat,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.papabear.product.entity.MallProductProperties" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_mall_product_properties
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="categoryModelId != null" >
+        category_model_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="invalid != null" >
+        invalid,
+      </if>
+      <if test="propertyName != null" >
+        property_name,
+      </if>
+      <if test="isTrace != null" >
+        is_trace,
+      </if>
+      <if test="isCustomMade != null" >
+        is_custom_made,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="displayFormat != null" >
+        display_format,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryModelId != null" >
+        #{categoryModelId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="propertyName != null" >
+        #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrace != null" >
+        #{isTrace,jdbcType=TINYINT},
+      </if>
+      <if test="isCustomMade != null" >
+        #{isCustomMade,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="displayFormat != null" >
+        #{displayFormat,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.papabear.product.entity.MallProductProperties" >
+    update tbl_mall_product_properties
+    <set >
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryModelId != null" >
+        category_model_id = #{categoryModelId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="invalid != null" >
+        invalid = #{invalid,jdbcType=TINYINT},
+      </if>
+      <if test="propertyName != null" >
+        property_name = #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrace != null" >
+        is_trace = #{isTrace,jdbcType=TINYINT},
+      </if>
+      <if test="isCustomMade != null" >
+        is_custom_made = #{isCustomMade,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="displayFormat != null" >
+        display_format = #{displayFormat,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.papabear.product.entity.MallProductProperties" >
+    update tbl_mall_product_properties
+    set create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      category_model_id = #{categoryModelId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      invalid = #{invalid,jdbcType=TINYINT},
+      property_name = #{propertyName,jdbcType=VARCHAR},
+      is_trace = #{isTrace,jdbcType=TINYINT},
+      is_custom_made = #{isCustomMade,jdbcType=TINYINT},
+      sort = #{sort,jdbcType=INTEGER},
+      display_format = #{displayFormat,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
